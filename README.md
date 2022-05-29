@@ -4,5 +4,5 @@
 
 I promise to not do somtething scary to your computer:
 ```bash
-curl url | sh
+curl -L https://github.com/ivanmoreau/sims4moddingboilerplate/raw/master/new.sh | sh
 ```

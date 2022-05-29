@@ -1,4 +1,4 @@
-export projectURL=""
+export projectURL="https://github.com/ivanmoreau/sims4moddingboilerplate"
 
 export user_name=$(id -u -n)
 echo "henlo $user_name ~~"
