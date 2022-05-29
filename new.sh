@@ -12,13 +12,6 @@ printf "Press enter to continue or Ctrl+C to cancel"
 read
 echo "Good. Let's go..."
 
-# Check if git is installed
-if ! [ -x "$(command -v git)" ]; then
-  echo 'Error: git is not installed.' >&2
-  exit 1
-fi
-# git clone to ${project_name}_sims4mod
-git clone $projectURL ${project_name}_sims4mod
 
 export infered_py_verr=$(python3 -V | grep "Python 3.7" | wc -l)
 if [ $infered_py_verr -eq 0 ]; then
@@ -40,6 +33,15 @@ else
   echo "Python 3.7 is installed. Good."
   export PyPath=$(which python3)
 fi
+
+
+# Check if git is installed
+if ! [ -x "$(command -v git)" ]; then
+  echo 'Error: git is not installed.' >&2
+  exit 1
+fi
+# git clone to ${project_name}_sims4mod
+git clone $projectURL ${project_name}_sims4mod
 
 # Set common things
 ESCAPED_REPLACE=$(printf '%s\n' "$PyPath" | sed -e 's/[\/&]/\\&/g')
