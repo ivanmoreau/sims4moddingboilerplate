@@ -1,5 +1,7 @@
 export projectURL="https://github.com/ivanmoreau/sims4moddingboilerplate"
 
+echo "Current dir: $(pwd)"
+
 export user_name=$(id -u -n)
 echo "henlo $user_name ~~"
 printf "Quick. Enter project name: "
@@ -40,7 +42,8 @@ else
 fi
 
 # Set common things
-cat ${project_name}_sims4mod/Makefile | sed -e "s/^\(PY = \"\).*/\1${PyPath}\"/" > ${project_name}_sims4mod/Makefile.tmp
+ESCAPED_REPLACE=$(printf '%s\n' "$PyPath" | sed -e 's/[\/&]/\\&/g')
+cat ${project_name}_sims4mod/Makefile | sed -e "s/^\(PY = \"\).*/\1${ESCAPED_REPLACE}\"/" > ${project_name}_sims4mod/Makefile.tmp
 mv ${project_name}_sims4mod/Makefile.tmp ${project_name}_sims4mod/Makefile
 # Replace ANONVAR with user name
 cat ${project_name}_sims4mod/Makefile | sed -e "s/ANONVAR/${user_name}/" > ${project_name}_sims4mod/Makefile.tmp
