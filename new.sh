@@ -18,8 +18,6 @@ fi
 # git clone to ${project_name}_sims4mod
 git clone $projectURL $project_name_sims4mod
 
-cd $project_name_sims4mod
-
 export infered_py_verr=$(python3 -V | grep "Python 3.7" | wc -l)
 if [ $infered_py_verr -eq 0 ]; then
   echo "Error: Python 3.7 is not installed." >&2
@@ -42,14 +40,14 @@ else
 fi
 
 # Set common things
-cat Makefile | sed -e "s/^\(PY = \"\).*/\1${PyPath}\"/" > Makefile.tmp
-mv Makefile.tmp Makefile
+cat ${project_name_sims4mod}/Makefile | sed -e "s/^\(PY = \"\).*/\1${PyPath}\"/" > ${project_name_sims4mod}/Makefile.tmp
+mv ${project_name_sims4mod}/Makefile.tmp ${project_name_sims4mod}/Makefile
 # Replace ANONVAR with user name
-cat Makefile | sed -e "s/ANONVAR/${user_name}/" > Makefile.tmp
-mv Makefile.tmp Makefile
+cat ${project_name_sims4mod}/Makefile | sed -e "s/ANONVAR/${user_name}/" > ${project_name_sims4mod}/Makefile.tmp
+mv ${project_name_sims4mod}/Makefile.tmp ${project_name_sims4mod}/Makefile
 # Replace some_good_mod with project name
-cat Makefile | sed -e "s/some_good_mod/${project_name}/" > Makefile.tmp
-mv Makefile.tmp Makefile
+cat ${project_name_sims4mod}/Makefile | sed -e "s/some_good_mod/${project_name}/" > ${project_name_sims4mod}/Makefile.tmp
+mv ${project_name_sims4mod}/Makefile.tmp ${project_name_sims4mod}/Makefile
 
 echo "Which language do you want to use?"
 echo "1. Python"
@@ -82,19 +80,17 @@ if [ $lang_choice -eq 2 ]; then
   echo "Done."
 fi
 
-rm new.sh
-rm README.md
+rm ${project_name_sims4mod}/new.sh
+rm ${project_name_sims4mod}/README.md
 echo "Do you want to keep the LICENSE file? (y/n)"
 read keep_lic
 export keep_lic2=$(echo $keep_lic | grep -i "y" | wc -l)
 if [ $keep_lic2 -eq 0 ]; then
   echo "Okay. I will remove the LICENSE file."
-  rm LICENSE
+  ${project_name_sims4mod}/rm LICENSE
 fi
-rm -rg .git
-git init .
-git add .
-git commit -m "Initial commit 🥳."
+rm -rf ${project_name_sims4mod}/.git
+cd ${project_name_sims4mod}/ && git init . && git add . && git commit -m "Initial commit 🥳."
 
 echo "All done! Now you can run make init to set the environment."
 echo "--- HELP INIT ---"
